@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import '../style/TodoList.css';
 
 class TodoList extends Component {
 
@@ -23,27 +24,28 @@ class TodoList extends Component {
         }, console.log(this.items));
     }
 
+    deleteTodos = (event) => {
+        event.preventDefault();
+        const array = this.state.items;
+        const index = array.indexOf(event.target.value);
+        array.splice(index, 1);
+        this.setState({
+            items: array
+        });
+      }
+      
+
 //récupère le tableau et affiche un item et un bouton pour chaque items
     renderTodos() {
-        return this.state.items.map((items) => {
+        return this.state.items.map((item) => {
             return (
-                <div key={items}>
-                  {items} | <button onClick={this.deleteTodos}>x</button>
+                <div className='list-group-item' key={item}>
+                  {item} | <button onClick={ this.deleteTodos }><i class="far fa-trash-alt"></i></button>
                 </div>
             )
         })
     }
 
-    
-    deleteTodos = (event) => {
-      event.preventDefault();
-      const array = this.state.items;
-      const index = array.indexOf(event.target.value);
-      array.splice(index, 1);
-      this.setState({
-          items: array
-      });
-    }
 
     render() {
 
@@ -51,15 +53,18 @@ class TodoList extends Component {
 
             <div>
               <h1>Ma Todo List</h1>
-                <form>
+                <form className='form-row align-items-center'>
                     <input 
                     value={ this.state.userInput } 
                     type='text' 
                     placeholder='Renseigner un item'
-                    onChange={ this.onChange } />
-                    <button onClick={ this.addTodo }>Ajouter</button>
+                    onChange={ this.onChange }
+                    className='form-control mb-2' />
+                    <button 
+                    onClick={ this.addTodo } 
+                    className='btn btn-primary'>Ajouter</button>
                 </form>
-                <div>
+                <div className='list-group'>
                   { this.renderTodos() }
                 </div>
             </div>
