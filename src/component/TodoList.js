@@ -23,28 +23,31 @@ class TodoList extends Component {
             items: [...this.state.items, this.state.userInput],
         }, console.log(this.items));
     }
+      
 
-    deleteTodos = (event) => {
-        event.preventDefault();
+//récupère le tableau et affiche un item et un bouton pour chaque items
+    renderTodos = () => {
+
+        return this.state.items.map((item, index) => {
+
+            return (
+                <li key={index}> {item}
+                    <button onClick={ this.deleteTodos.bind(this, index) }>
+                    <i class="far fa-trash-alt"></i></button>
+                </li>
+            )
+        })
+    }
+
+    
+    deleteTodos = (index) => {
+      
         const array = this.state.items;
-        const index = array.indexOf(event.target.value);
         array.splice(index, 1);
         this.setState({
             items: array
         });
       }
-      
-
-//récupère le tableau et affiche un item et un bouton pour chaque items
-    renderTodos() {
-        return this.state.items.map((item) => {
-            return (
-                <div className='list-group-item' key={item}>
-                  {item} | <button onClick={ this.deleteTodos }><i class="far fa-trash-alt"></i></button>
-                </div>
-            )
-        })
-    }
 
 
     render() {
